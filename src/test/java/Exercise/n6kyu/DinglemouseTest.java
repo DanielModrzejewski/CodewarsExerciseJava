@@ -88,4 +88,108 @@ public class DinglemouseTest {
         assertEquals(expectedSpeach,correctedSpeach);
     }
 
+    @Test
+    public void speechCorrectionTestWithpositiveLowerCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i can";
+        String expectedSpeach = "Yes i can't";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithpositiveUpperCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i CAN";
+        String expectedSpeach = "Yes i CAN'T";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithpositiveLowerAndUpperCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i cAn";
+        String expectedSpeach = "Yes i cAn't";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithNegativeLowerCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i can't";
+        String expectedSpeach = "Yes i can";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithNegativeUpperCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i CAN'T";
+        String expectedSpeach = "Yes i CAN";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithNegativeUpperAndLowerCaseWordCan() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i CaN'T";
+        String expectedSpeach = "Yes i CaN";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithNegativeUpperAndLowerCaseWordCanWithPunctuation() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes i CaN'T.?";
+        String expectedSpeach = "Yes i CaN.?";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
+    @Test
+    public void speechCorrectionTestWithNegativeUpperAndLowerCaseWordCanWithSuffixVe() {
+        //Given
+        Dinglemouse dinglemouse = new Dinglemouse();
+        String speach = "Yes would've i CaN'T.?";
+        String expectedSpeach = "Yes wouldn't've i CaN.?";
+        Set<String> words = new HashSet<>(Arrays.asList("can", "do", "have", "was", "would"));
+        //When
+        String correctedSpeach = dinglemouse.speechCorrection(words,speach);
+        //Then
+        assertEquals(expectedSpeach,correctedSpeach);
+    }
+
 }

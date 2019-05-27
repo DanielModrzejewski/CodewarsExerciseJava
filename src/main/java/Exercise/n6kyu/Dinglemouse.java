@@ -38,9 +38,9 @@ package Exercise.n6kyu;
 //        when changing negative to positive the replacement word must be same case as the original
 //        when changing positive to negative use n't (except if the original word (plus any 've part) was entirely uppercase, then use N'T)
 //
-//        Beware of the word can  // todo
+//        Beware of the word can
 //
-//        Beware of punctuation  // todo
+//        Beware of punctuation
 //
 //        Beware of variations with an 've suffix, such as should've, would've, could've, etc  // todo
 //
@@ -67,16 +67,42 @@ public class Dinglemouse {
         return Arrays.stream(speech.split(" ")).map(s -> s = correctIfIsInWords(s, words)).collect(Collectors.joining(" "));
     }
     private static String correctIfIsInWords (String speachWord, Set<String> words) {
-        if (words.contains(speachWord)) {
-            return speachWord + "n't";
-        } else if (words.stream().map(w -> w.toUpperCase()).collect(Collectors.toSet()).contains(speachWord)){
-            return speachWord + "N'T";
-        } else if (words.contains(speachWord.toLowerCase())){
-            return speachWord + "n't";
-        } else if (words.stream().map(w -> w = w + "n't").collect(Collectors.toSet()).contains(speachWord.toLowerCase())) {
-            return speachWord.substring(0, speachWord.length()-3);
+
+        String regex = ".*\\W";
+        String suffix = "";
+        while (speachWord.matches(regex)) {
+            suffix = speachWord.substring(speachWord.length()-1) + suffix;
+            speachWord = speachWord.substring(0,speachWord.length()-1);
         }
-        return speachWord;
+        if (speachWord.matches(".*'ve")) {
+            suffix = speachWord.substring(speachWord.length()-3) + suffix;
+            speachWord = speachWord.substring(0,speachWord.length()-3);
+        }
+
+        if (words.contains(speachWord)) {
+            if (speachWord.toLowerCase().endsWith("n")) {
+                return speachWord + "'t" + suffix;
+            } else {
+                return speachWord + "n't" + suffix;
+            }
+        } else if (words.stream().map(w -> w.toUpperCase()).collect(Collectors.toSet()).contains(speachWord)){
+            if (speachWord.toLowerCase().endsWith("n")) {
+                return speachWord + "'T" + suffix;
+            } else {
+                return speachWord + "N'T" + suffix;
+            }
+        } else if (words.contains(speachWord.toLowerCase())){
+            if (speachWord.toLowerCase().endsWith("n")) {
+                return speachWord + "'t" + suffix;
+            } else {
+                return speachWord + "n't" + suffix;
+            }
+        } else if (words.stream().map(w -> w = w + "n't").collect(Collectors.toSet()).contains(speachWord.toLowerCase())) {
+                return speachWord.substring(0, speachWord.length()-3) + suffix;
+        } else if (words.stream().map(w -> w = w.endsWith("n")? w + "'t": w).collect(Collectors.toSet()).contains(speachWord.toLowerCase())) {
+            return speachWord.substring(0, speachWord.length()-2) + suffix;
+        }
+        return speachWord + suffix;
     }
 
 }

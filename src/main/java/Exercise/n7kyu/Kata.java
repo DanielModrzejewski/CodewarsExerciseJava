@@ -22,20 +22,12 @@ package Exercise.n7kyu;
 
 public class Kata {
     public static String dative(String word) {
-        final char[] frontVowel = {'e', 'é', 'i', 'í', 'ö', 'ő', 'ü', 'ű'};
-        final char[] backVowel = {'a', 'á', 'o', 'ó', 'u', 'ú'};
 
-        for (int i = word.length()-1; i>=0; i--) {
-            for (int j = 0; j < frontVowel.length; j++) {
-                if (word.charAt(i) == frontVowel[j]) {
-                    return word + "nek";
-                }
-            }
-            for (int j = 0; j < backVowel.length; j++) {
-                if (word.charAt(i) == backVowel[j]) {
-                    return word + "nak";
-                }
-            }
+        if (word.matches(".*[eéiíöőüű][^aáoóuú]*")) {
+            return word + "nek";
+        }
+        if (word.matches(".*[aáoóuú][^eéiíöőüű]*")) {
+            return word + "nak";
         }
         return word;
     }
